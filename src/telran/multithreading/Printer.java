@@ -1,30 +1,24 @@
 package telran.multithreading;
 
 public class Printer extends Thread {
-	String symbols;
-	boolean running = true;
-	public Printer(String symbols) {
-		this.symbols = symbols;
-	}
-	public void finish() {
-		running = false;
-	}
+	private Printer next;
+
 	@Override
 	public void run() {
-		int nSymbols = symbols.length();
-		char[] arrSymbols = symbols.toCharArray();
-		int index = 0;
-		while(running) {
-			System.out.print(arrSymbols[index]+ " ");
+		int count = 0;
+
+		while (count < PrinterControllerAppl.LENGTH / PrinterControllerAppl.PORTION) {
 			try {
-				sleep(2000);
+				join();
 			} catch (InterruptedException e) {
-				index++;
-				if(index == nSymbols) {
-					index = 0;
-				}
+				System.out.println((this.threadId() + " ").repeat(PrinterControllerAppl.PORTION));
+				count++;
+				next.interrupt();
 			}
 		}
 	}
-	
+
+	public void setNext(Printer next) {
+		this.next = next;
+	}
 }
