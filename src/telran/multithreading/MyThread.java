@@ -15,19 +15,13 @@ public class MyThread extends Thread {
     @Override
     public void run() {
         try {
-            for (int i = 0; i < distance; i++) {
+            for (int i = 0; i < distance; i++)
                 sleep(sleepTime);
-                System.out.println(this.threadId());
-            }
 
-            if (MyController.winner == -1) {
+            if (MyController.winner == -1)
                 MyController.winner = this.threadId();
-            }
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
     }
-
-
-
 }
