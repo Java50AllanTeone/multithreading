@@ -5,12 +5,14 @@ import telran.view.Item;
 import telran.view.Menu;
 import telran.view.SystemInputOutput;
 
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 
 
 public class MyController {
-    static long winner = -1;
+    static ArrayList<MyThread> winnerTable = new ArrayList<>();
     private static int nThreads;
     private static int distance;
 
@@ -24,7 +26,6 @@ public class MyController {
     }
 
     private static void newGame(InputOutput inputOutput) {
-        winner = -1;
         nThreads = inputOutput.readInt("Enter number of threads ", "Wrong number", 3, 10);
         distance = inputOutput.readInt("Enter distance ", "Wrong number", 100, 3500);
         Thread[] threads = new Thread[nThreads];
@@ -32,8 +33,8 @@ public class MyController {
         for (int i = 0; i < nThreads; i++)
             threads[i] = new MyThread(distance);
 
-        for (int i = 0; i < threads.length; i++)
-            threads[i].start();
+        MyThread.startTime = Instant.now();
+        threadsStart(threads);
 
         for (int i = 0; i < threads.length; i++) {
             try {
@@ -42,6 +43,15 @@ public class MyController {
                 throw new RuntimeException(e);
             }
         }
-        System.out.println("Congrats to thread #" + winner);
+//        System.out.println("Congrats to thread #" + winner);
+        for (int i = 0; i < winnerTable.size(); i++) {
+            var elem = winnerTable.get(i);
+            System.out.println(i + 1 + " " + elem.threadId() + ChronoUnit.MILLIS.between(MyThread.startTime, elem.endTime));
+        }
+    }
+
+    public static void threadsStart(Thread[] threads) {
+        for(Thread th: threads)
+            th.start();
     }
 }
