@@ -1,4 +1,4 @@
-package telran.multithreading;
+package telran.multithreading.error;
 
 public class Counter extends Thread {
  private static int counterResource1 = 0;

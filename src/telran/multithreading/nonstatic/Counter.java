@@ -1,4 +1,4 @@
-package telran.multithreading;
+package telran.multithreading.nonstatic;
 
 public class Counter extends Thread {
  private CounterResource counterResource1;
