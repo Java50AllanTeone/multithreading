@@ -33,25 +33,42 @@ public class MyController {
         for (int i = 0; i < nThreads; i++)
             threads[i] = new MyThread(distance);
 
-        MyThread.startTime = Instant.now();
         threadsStart(threads);
+        threadsJoin(threads);
 
-        for (int i = 0; i < threads.length; i++) {
+        printTable(5, 10);
+
+
+    }
+
+    public static void threadsStart(Thread[] threads) {
+        MyThread.startTime = Instant.now();
+
+        for(Thread th: threads)
+            th.start();
+    }
+
+    public static void threadsJoin(Thread[] threads) {
+        for(Thread th: threads) {
             try {
-                threads[i].join();
+                th.join();
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
         }
-//        System.out.println("Congrats to thread #" + winner);
-        for (int i = 0; i < winnerTable.size(); i++) {
-            var elem = winnerTable.get(i);
-            System.out.println(i + 1 + " " + elem.threadId() + ChronoUnit.MILLIS.between(MyThread.startTime, elem.endTime));
-        }
     }
 
-    public static void threadsStart(Thread[] threads) {
-        for(Thread th: threads)
-            th.start();
+    public static void printTable(int headerInt, int interval) {
+        String headerSpace = " ".repeat(headerInt);
+        String space = " ".repeat(interval);
+        String header = String.format("place%sracer number%stime", headerSpace, headerSpace);
+        System.out.println(header);
+
+        for (int i = 0; i < winnerTable.size(); i++) {
+            var elem = winnerTable.get(i);
+            String winnerLine = String.format("%d%s%d%s%d", i + 1, space, elem.threadId(), space, ChronoUnit.MILLIS.between(MyThread.startTime, elem.endTime));
+            System.out.println(winnerLine);
+        }
+
     }
 }
