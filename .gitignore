@@ -3,3 +3,4 @@
 /bin
 /.settings
 /out
+!/.idea/multithreading.iml
