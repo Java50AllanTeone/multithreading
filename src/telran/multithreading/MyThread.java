@@ -20,8 +20,9 @@ public class MyThread extends Thread {
             for (int i = 0; i < distance; i++)
                 sleep(rn.nextInt(max + 1));
 
-            this.endTime = Instant.now();
+
             synchronized (MyController.winnerTable) {
+                this.endTime = Instant.now();
                 MyController.winnerTable.add(this);
             }
 
