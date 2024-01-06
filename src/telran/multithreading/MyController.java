@@ -7,10 +7,11 @@ import telran.view.SystemInputOutput;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicLong;
 
 
 public class MyController {
-    static long winner = -1;
+    static AtomicLong winner = new AtomicLong(-1);
     private static int nThreads;
     private static int distance;
 
@@ -24,7 +25,7 @@ public class MyController {
     }
 
     private static void newGame(InputOutput inputOutput) {
-        winner = -1;
+        winner.set(-1);
         nThreads = inputOutput.readInt("Enter number of threads ", "Wrong number", 3, 10);
         distance = inputOutput.readInt("Enter distance ", "Wrong number", 100, 3500);
         Thread[] threads = new Thread[nThreads];
@@ -42,6 +43,6 @@ public class MyController {
                 throw new RuntimeException(e);
             }
         }
-        System.out.println("Congrats to thread #" + winner);
+        System.out.println("Congrats to thread #" + winner.get());
     }
 }

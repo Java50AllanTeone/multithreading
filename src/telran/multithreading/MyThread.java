@@ -18,8 +18,7 @@ public class MyThread extends Thread {
             for (int i = 0; i < distance; i++)
                 sleep(sleepTime);
 
-            if (MyController.winner == -1)
-                MyController.winner = this.threadId();
+            MyController.winner.compareAndExchange(-1, this.threadId());
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
