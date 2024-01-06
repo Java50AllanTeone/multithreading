@@ -1,4 +1,4 @@
-package telran.multithreading;
+package telran.multithreading.deadlock;
 
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;

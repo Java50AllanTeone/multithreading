@@ -1,4 +1,4 @@
-package telran.multithreading;
+package telran.multithreading.atomic;
 
 import java.util.concurrent.atomic.AtomicInteger;
 

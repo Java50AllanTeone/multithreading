@@ -1,4 +1,4 @@
-package telran.multithreading;
+package telran.multithreading.deadlock;
 
 public class Worker extends Thread {
 	static final Object mutex1=new Object();
