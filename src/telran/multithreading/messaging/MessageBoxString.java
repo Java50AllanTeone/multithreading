@@ -4,9 +4,10 @@ package telran.multithreading.messaging;
  */
 public class MessageBoxString implements MessageBox{
 	private String message;
+
 	@Override
 	synchronized public void put(String message) {
-		while(this.message  != null) {
+		while(this.message != null) {
 			try {
 				this.wait();
 			} catch (InterruptedException e) {
@@ -14,8 +15,7 @@ public class MessageBoxString implements MessageBox{
 			}
 		}
 		this.message = message;
-		this.notify();
-		
+		this.notifyAll();
 	}
 
 	@Override
@@ -25,16 +25,14 @@ public class MessageBoxString implements MessageBox{
 		}
 		String res = message;
 		message = null;
-		notify();
+		notifyAll();
 		return res;
 	}
 
 	@Override
 	synchronized public String pull() {
-		
 		String str = message;
-		message = null;
-		notify();
+		notifyAll();
 		return str;
 	}
 
