@@ -1,8 +1,8 @@
-package telran.multithreading;
+package telran.multithreading.mbox.blocking;
 
-import telran.multithreading.consumer.Receiver;
-import telran.multithreading.messaging.*;
-import telran.multithreading.producer.Sender;
+import telran.multithreading.mbox.blocking.consumer.Receiver;
+import telran.multithreading.mbox.blocking.messaging.*;
+import telran.multithreading.mbox.blocking.producer.Sender;
 
 public class SenderReceiverAppl {
 

@@ -1,4 +1,4 @@
-package telran.multithreading.messaging;
+package telran.multithreading.myblockingqueue.messaging;
 
 import java.util.concurrent.TimeUnit;
 

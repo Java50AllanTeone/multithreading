@@ -1,4 +1,4 @@
-package telran.multithreading.dto;
+package telran.multithreading.garage.dto;
 
 import java.time.Instant;
 

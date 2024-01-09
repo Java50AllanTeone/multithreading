@@ -1,9 +1,9 @@
-package telran.multithreading.modeling;
+package telran.multithreading.garage.modeling;
 
 import java.time.Instant;
 import java.util.concurrent.*;
 
-import telran.multithreading.dto.Car;
+import telran.multithreading.garage.dto.Car;
 
 public class Garage {
 private static final int N_WORKERS = 5;

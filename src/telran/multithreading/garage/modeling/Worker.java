@@ -1,8 +1,8 @@
-package telran.multithreading.modeling;
+package telran.multithreading.garage.modeling;
 
 import java.util.concurrent.*;
 
-import telran.multithreading.dto.Car;
+import telran.multithreading.garage.dto.Car;
 
 public class Worker extends Thread {
 	int nCars;

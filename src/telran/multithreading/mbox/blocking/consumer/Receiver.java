@@ -1,6 +1,6 @@
-package telran.multithreading.consumer;
+package telran.multithreading.mbox.blocking.consumer;
 
-import telran.multithreading.messaging.MessageBox;
+import telran.multithreading.mbox.blocking.messaging.MessageBox;
 
 public class Receiver extends Thread {
 	private MessageBox messageBox;

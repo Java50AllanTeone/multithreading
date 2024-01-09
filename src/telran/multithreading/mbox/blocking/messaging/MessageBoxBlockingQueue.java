@@ -1,4 +1,4 @@
-package telran.multithreading.messaging;
+package telran.multithreading.mbox.blocking.messaging;
 
 import java.util.concurrent.*;
 
