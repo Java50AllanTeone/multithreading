@@ -12,7 +12,7 @@ public class MyLinkedBlockingQueue<E> implements MyBlockingQueue<E> {
 		this.queue = new LinkedList<>();
 	}
 	@Override
-	public synchronized boolean add(E obj) {
+	synchronized public boolean add(E obj) {
 		if (this.queue.size() >= capacity) {
 			throw new IllegalStateException();
 		}
@@ -21,7 +21,7 @@ public class MyLinkedBlockingQueue<E> implements MyBlockingQueue<E> {
 	}
 
 	@Override
-	public synchronized boolean offer(E obj) {
+	synchronized public boolean offer(E obj) {
 		boolean res = true;
 
 		try {
@@ -33,16 +33,16 @@ public class MyLinkedBlockingQueue<E> implements MyBlockingQueue<E> {
 	}
 
 	@Override
-	public synchronized void put(E obj) throws InterruptedException {
+	synchronized public void put(E obj) throws InterruptedException {
 		while (queue.size() >= capacity) {
-			wait();
+			this.wait();
 		}
 		this.add(obj);
-		notifyAll();
+		this.notifyAll();
 	}
 
 	@Override
-	public synchronized boolean offer(E obj, long timeout, TimeUnit unit) throws InterruptedException {
+	synchronized public boolean offer(E obj, long timeout, TimeUnit unit) throws InterruptedException {
 		var startTime = System.currentTimeMillis();
 		var timeRunning = unit.toMillis(timeout);
 
@@ -53,12 +53,12 @@ public class MyLinkedBlockingQueue<E> implements MyBlockingQueue<E> {
 	}
 
 	@Override
-	public synchronized E remove() {
+	synchronized public E remove() {
 		return queue.pop();
 	}
 
 	@Override
-	public synchronized E poll() {
+	synchronized public E poll() {
 		E res = null;
 
 		try {
@@ -69,31 +69,35 @@ public class MyLinkedBlockingQueue<E> implements MyBlockingQueue<E> {
 	}
 
 	@Override
-	public synchronized E take() throws InterruptedException {
+	synchronized public E take() throws InterruptedException {
 		while (this.queue.size() == 0) {
-			wait();
+			this.wait();
 		}
-		return this.poll();
+		var res = this.poll();
+		this.notifyAll();
+		return res;
 	}
 
 	@Override
-	public synchronized E poll(long timeout, TimeUnit unit) throws InterruptedException {
+	synchronized public E poll(long timeout, TimeUnit unit) throws InterruptedException {
 		var startTime = System.currentTimeMillis();
 		var timeRunning = unit.toMillis(timeout);
 
 		while (queue.size() == 0 && System.currentTimeMillis() <= startTime + timeRunning) {
 			wait();
 		}
-		return this.poll();
+		var res = this.poll();
+		this.notifyAll();
+		return res;
 	}
 
 	@Override
-	public synchronized E element() {
+	synchronized public E element() {
 		return this.queue.element();
 	}
 
 	@Override
-	public synchronized E peek() {
+	synchronized public E peek() {
 		E res = null;
 
 		try {
