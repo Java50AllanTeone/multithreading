@@ -20,8 +20,10 @@ public class Racer extends Thread {
 				System.out.println("Racer: " + this.getName() + " get " + i);
 			} catch (InterruptedException e) {}
 		}
+		long finishTime = System.currentTimeMillis();
 		System.out.println("Racer: " + this.getName() + " finished");
-		race.setFinish(this);
+		race.setFinish(this, finishTime);
+
 	}
 
 }

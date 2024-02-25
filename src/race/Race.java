@@ -56,8 +56,8 @@ public class Race {
 		return racers[curInd];
 	}
 	
-	public void setFinish(Racer racer) {
-		resultTable[racer.id] = System.currentTimeMillis();
+	public void setFinish(Racer racer, long time) {
+		resultTable[racer.id] = time;
 	}
 
 }
