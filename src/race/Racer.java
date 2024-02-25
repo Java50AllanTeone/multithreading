@@ -14,7 +14,7 @@ public class Racer extends Thread {
 		
 		for (int i = 0; i < race.distance; i++) {
 			try {
-				sleep(race.sleepingDuration);
+				sleep(race.getSleepingDuration());
 				System.out.println("Racer: " + this.getName() + " get " + i);
 			} catch (InterruptedException e) {}
 		}

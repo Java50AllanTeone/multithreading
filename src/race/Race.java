@@ -6,13 +6,15 @@ public class Race {
 	String winnerName = "";
 	Racer[] racers;
 	int distance;
-	int sleepingDuration;
 	
 	Race(int count, int distance) {
 		this.distance = distance;
-		sleepingDuration = new Random().nextInt(3) + 2;
 		getRacers(count);
 		
+	}
+	
+	public int getSleepingDuration() {
+		return new Random().nextInt(100) + 2;
 	}
 	
 	private void getRacers(int count) {
