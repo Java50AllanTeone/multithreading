@@ -2,10 +2,12 @@ package race;
 
 public class Racer extends Thread {
 	private final Race race;
+	int id;
 	
-	Racer(Race race, String name) {
+	Racer(Race race, String name, int id) {
 		this.race = race;
 		this.setName(name);
+		this.id = id;
 	}
 	
 	@Override
@@ -19,10 +21,7 @@ public class Racer extends Thread {
 			} catch (InterruptedException e) {}
 		}
 		System.out.println("Racer: " + this.getName() + " finished");
-		
-		if (race.winnerName.equals("")) {
-			race.winnerName = this.getName();
-		}
+		race.setFinish(this);
 	}
 
 }
