@@ -1,20 +1,26 @@
 package telran.multithreading;
 
-import java.time.Instant;
-import java.time.temporal.ChronoUnit;
 
 public class PrinterController {
+	private static int N_PRINTERS = 4;
 
 	public static void main(String[] args) throws InterruptedException {
-		Printer printer1 = new Printer('#', 100);
-		Printer printer2 = new Printer('*', 100);
-		Instant start = Instant.now();
-		printer1.start();
-		printer2.start();
-		printer1.join(); //waiting for finishing of the printer1 thread
-		printer2.join(); //waiting for finishing of the printer2 thread
-		Instant finish = Instant.now();
-		System.out.printf("running time is %d\n", ChronoUnit.MILLIS.between(start, finish));
+		Printer[] printers = new Printer[N_PRINTERS];
+		
+		printers[0] = new Printer(null, 0);
+		
+		for (int i = printers.length - 1; i > 0; i--) {
+			int curPrinter = (i + 1) % printers.length;
+			printers[i] = new Printer(printers[curPrinter], i);
+		}
+		printers[0].setPrinter(printers[1]);
+		
+		for (int i = 0; i < printers.length; i++) {
+			printers[i].start();
+		}
+		printers[0].interrupt();
+		
+		
 
 	}
 
