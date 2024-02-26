@@ -18,8 +18,11 @@ public class Racer extends Thread {
 				sleep(race.getSleepingDuration());
 			} catch (InterruptedException e) {}
 		}
-		timeFinish = System.currentTimeMillis();
 		race.setFinish(this);
+	}
+	
+	protected void setTimeFinish() {
+		timeFinish = System.currentTimeMillis();
 	}
 
 }

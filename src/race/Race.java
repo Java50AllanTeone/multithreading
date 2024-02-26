@@ -77,6 +77,7 @@ public class Race {
 	}
 	
 	synchronized public void setFinish(Racer racer) {
+		racer.setTimeFinish();
 		winnerTable.add(racer);
 	}
 
