@@ -1,17 +1,21 @@
 package race;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 public class Race {
-	String winnerName = "";
+	int baseOffset = 10;
+	String[] columns = {"place", "racer number", "time"};
+	String title = getTitle();
+	
 	Racer[] racers;
-	long[] resultTable;
+	ArrayList<Racer> winnerTable;
 	int distance;
+	long timeStart;
 	
 	Race(int count, int distance) {
 		this.distance = distance;
-		getRacers(count);
-		
+		getRacers(count);	
 	}
 	
 	public int getSleepingDuration() {
@@ -20,7 +24,7 @@ public class Race {
 	
 	private void getRacers(int count) {
 		racers = new Racer[count];
-		resultTable = new long[count];
+		winnerTable = new ArrayList<>(count);
 		
 		for (int i = 0; i < racers.length; i++) {
 			racers[i] = new Racer(this, "Racer: " + i, i);
@@ -28,11 +32,12 @@ public class Race {
 	}
 	
 	public void startRacers() {
+		timeStart = System.currentTimeMillis();
 		for (int i = 0; i < racers.length; i++) {
 			racers[i].start();
 		}
 		waitRacers();
-		System.out.println("Winner: " + getWinner().getName());
+		printWinners();
 	}
 	
 	private void waitRacers() {
@@ -43,21 +48,36 @@ public class Race {
 		}
 	}
 	
-	private Racer getWinner() {
-		long curMin = resultTable[0];
-		int curInd = 0;
+	private void printWinners() {
+		System.out.println(title);
+		System.out.println("-".repeat(title.length()));
 		
-		for (int i = 1; i < resultTable.length; i++) {
-			if (resultTable[i]< curMin) {
-				curMin = resultTable[i];
-				curInd = i;
-			}
+		for (int i = 0; i < winnerTable.size(); i++) {
+			Racer racer = winnerTable.get(i);
+			int place = i + 1;
+			long resultTime = racer.timeFinish - timeStart;
+			System.out.printf("%2$d%1$s%3$d%1$s%4$d\n", getInnerOffset(place, racer.id, resultTime), place, racer.id, resultTime);
 		}
-		return racers[curInd];
 	}
 	
-	public void setFinish(Racer racer, long time) {
-		resultTable[racer.id] = time;
+	private String getTitle() {
+		StringBuilder builder = new StringBuilder();
+		
+		for (int i = 0; i < columns.length - 1; i++) {
+			builder.append(columns[i]);
+			builder.append(" ".repeat(baseOffset));
+		}
+		builder.append(columns[columns.length - 1]);
+		return builder.toString();
+	}
+	
+	private String getInnerOffset(int place, int id, long time) {
+		int chars = ("" + place + time + id).length();
+		return " ".repeat((title.length() - chars) / (columns.length - 1));
+	}
+	
+	synchronized public void setFinish(Racer racer) {
+		winnerTable.add(racer);
 	}
 
 }

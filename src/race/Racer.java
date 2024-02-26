@@ -3,6 +3,7 @@ package race;
 public class Racer extends Thread {
 	private final Race race;
 	int id;
+	long timeFinish;
 	
 	Racer(Race race, String name, int id) {
 		this.race = race;
@@ -12,18 +13,13 @@ public class Racer extends Thread {
 	
 	@Override
 	public void run() {
-		System.out.println("Racer: " + this.getName() + " started");
-		
 		for (int i = 0; i < race.distance; i++) {
 			try {
 				sleep(race.getSleepingDuration());
-				System.out.println("Racer: " + this.getName() + " get " + i);
 			} catch (InterruptedException e) {}
 		}
-		long finishTime = System.currentTimeMillis();
-		System.out.println("Racer: " + this.getName() + " finished");
-		race.setFinish(this, finishTime);
-
+		timeFinish = System.currentTimeMillis();
+		race.setFinish(this);
 	}
 
 }
